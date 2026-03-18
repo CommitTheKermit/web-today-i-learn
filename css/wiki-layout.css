@@ -1,3 +1,17 @@
+/* 변수 */
+:root {
+  --primary-color: #3b72c2;
+  --primary-light: #5c95e0;
+  --primary-dark: #2a5499;
+  --nav-bg-color: #fff;
+  --hero-bg-color: #f4f7fd;
+  --card-bg-color: #f9fbff;
+  --divider-color: #e4eaf5;
+  --font-default-color: #333;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
 /* 상단 내비게이션 */
 .top-nav {
   position: sticky;
@@ -6,9 +20,11 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 32px;
-  height: 56px;
-  background-color: var(--nav-bg-color);
+  height: 60px;
+  background-color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--divider-color);
+  box-shadow: var(--shadow-sm);
   z-index: 10;
 }
 
@@ -28,6 +44,7 @@
   text-decoration: none;
   color: var(--font-default-color);
   font-size: 0.9rem;
+  font-weight: 500;
   transition: color 0.2s;
 }
 
@@ -39,24 +56,53 @@
 .hero {
   display: flex;
   justify-content: center;
-  padding: 64px 32px;
-  background-color: var(--hero-bg-color);
+  padding: 80px 32px;
+  background: linear-gradient(135deg, #dce9f8 0%, #f4f7fd 50%, #e6effa 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 114, 194, 0.14) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  bottom: -50px;
+  left: -50px;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 114, 194, 0.08) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .profile-card {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 40px;
   max-width: 600px;
+  position: relative;
+  z-index: 1;
 }
 
 .profile-image {
   width: 160px;
   height: 160px;
   border-radius: 50%;
-  background-color: #ddd;
   flex-shrink: 0;
   overflow: hidden;
+  box-shadow: 0 0 0 4px #fff, 0 0 0 7px var(--primary-color), var(--shadow-md);
+  transition: box-shadow 0.2s;
 }
 
 .profile-image img {
@@ -66,13 +112,16 @@
 }
 
 .profile-info h1 {
-  font-size: 2rem;
-  margin-bottom: 8px;
+  font-size: 2.4rem;
+  margin-bottom: 10px;
+  color: var(--primary-dark);
+  letter-spacing: -0.5px;
 }
 
 .profile-info .tagline {
-  color: #777;
-  line-height: 1.6;
+  color: #666;
+  line-height: 1.7;
+  font-size: 1rem;
 }
 
 /* 메인 콘텐츠 */
@@ -83,8 +132,9 @@ main {
 }
 
 .content-section {
-  padding: 48px 0;
+  padding: 56px 0;
   border-bottom: 1px solid var(--divider-color);
+  scroll-margin-top: 70px;
 }
 
 .content-section:last-child {
@@ -92,8 +142,22 @@ main {
 }
 
 .content-section h2 {
-  font-size: 1.6rem;
-  margin-bottom: 16px;
+  font-size: 1.7rem;
+  margin-bottom: 24px;
+  color: var(--font-default-color);
+  padding-bottom: 12px;
+  position: relative;
+}
+
+.content-section h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 36px;
+  background: var(--primary-color);
+  border-radius: 2px;
 }
 
 .content-section > p,
@@ -103,18 +167,48 @@ main {
   margin-bottom: 24px;
 }
 
+/* 자기소개 링크 */
+.content-section > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  padding: 8px 18px;
+  background-color: var(--primary-color);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s, transform 0.15s;
+}
+
+.content-section > a:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
 /* 갤러리 그리드 */
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  gap: 10px;
 }
 
 .gallery-grid img {
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 8px;
+  transition: transform 0.25s, box-shadow 0.25s;
+  cursor: pointer;
+}
+
+.gallery-grid img:hover {
+  transform: scale(1.04);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  z-index: 1;
 }
 
 /* 인생 작품 카드 */
@@ -124,19 +218,33 @@ main {
   gap: 24px;
 }
 
+.works-list ul {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
 .work-card {
   display: flex;
   gap: 20px;
-  padding: 20px;
-  border-radius: 8px;
-  background-color: var(--card-bg-color);
+  padding: 24px;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--divider-color);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.work-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .work-thumbnail {
   width: 240px;
   height: 180px;
   background-color: #ddd;
-  border-radius: 4px;
+  border-radius: 8px;
   flex-shrink: 0;
   overflow: hidden;
 }
@@ -149,41 +257,52 @@ main {
 
 .work-info h3 {
   font-size: 1.2rem;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  color: var(--font-default-color);
 }
 
 .work-info p {
   color: #666;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 /* TIL */
 .til-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .til-item {
-  padding: 20px;
-  border-left: 3px solid var(--primary-color);
-  background-color: var(--card-bg-color);
-  border-radius: 0 8px 8px 0;
+  padding: 20px 24px;
+  border-left: 4px solid var(--primary-color);
+  background-color: #fff;
+  border-radius: 0 12px 12px 0;
+  box-shadow: var(--shadow-sm);
+  border-top: 1px solid var(--divider-color);
+  border-right: 1px solid var(--divider-color);
+  border-bottom: 1px solid var(--divider-color);
 }
 
 .til-item time {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: #999;
+  background: var(--hero-bg-color);
+  padding: 2px 10px;
+  border-radius: 10px;
+  display: inline-block;
 }
 
 .til-item h3 {
   font-size: 1.1rem;
-  margin: 8px 0;
+  margin: 10px 0 6px;
+  color: var(--font-default-color);
 }
 
 .til-item p {
   color: #666;
-  line-height: 1.6;
+  line-height: 1.7;
+  font-size: 0.95rem;
 }
 
 /* 방명록 */
@@ -196,11 +315,19 @@ main {
 
 .comment-form-container input,
 .comment-form-container textarea {
-  padding: 12px;
+  padding: 12px 14px;
   border: 1px solid var(--divider-color);
-  border-radius: 6px;
+  border-radius: 8px;
   font-family: inherit;
   font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.comment-form-container input:focus,
+.comment-form-container textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 114, 194, 0.15);
 }
 
 .comment-form-container textarea {
@@ -217,9 +344,12 @@ main {
 .comment-buttons button {
   padding: 8px 20px;
   border: none;
-  border-radius: 6px;
+  border-radius: 20px;
   cursor: pointer;
   font-size: 0.9rem;
+  font-family: inherit;
+  font-weight: 500;
+  transition: background-color 0.2s, transform 0.15s;
 }
 
 .comment-buttons button[type="button"] {
@@ -227,9 +357,18 @@ main {
   color: #fff;
 }
 
+.comment-buttons button[type="button"]:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
 .comment-buttons button[type="reset"] {
   background-color: #eee;
   color: #666;
+}
+
+.comment-buttons button[type="reset"]:hover {
+  background-color: #e0e0e0;
 }
 
 .comment-list {
@@ -240,9 +379,11 @@ main {
 }
 
 .comment-item {
-  padding: 16px;
-  background-color: var(--card-bg-color);
-  border-radius: 8px;
+  padding: 16px 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--divider-color);
 }
 
 .comment-item strong {
@@ -259,45 +400,63 @@ main {
 /* 푸터 */
 footer {
   text-align: center;
-  padding: 32px;
+  padding: 40px;
   color: #aaa;
   font-size: 0.85rem;
+  background: linear-gradient(to bottom, transparent, #e6effa);
+  margin-top: 20px;
 }
 
 /* 기본 정보 테이블 */
 .info-table {
   width: 100%;
   border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--divider-color);
 }
 
 .info-table th,
 .info-table td {
-  padding: 12px 16px;
+  padding: 14px 20px;
   border-bottom: 1px solid var(--divider-color);
   text-align: left;
 }
 
+.info-table tr:last-child th,
+.info-table tr:last-child td {
+  border-bottom: none;
+}
+
 .info-table th {
   width: 140px;
-  color: #555;
+  color: #fff;
   font-weight: 700;
-  background-color: var(--card-bg-color);
+  background-color: var(--primary-color);
 }
 
 .info-table td {
   color: #333;
+  background-color: #fff;
+}
+
+.info-table tr:hover td {
+  background-color: var(--hero-bg-color);
+  transition: background-color 0.15s;
 }
 
 /* TIL 작성 폼 */
 .til-form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 24px;
+  gap: 16px;
+  padding: 28px;
   margin-bottom: 32px;
   border: 1px solid var(--divider-color);
-  border-radius: 8px;
-  background-color: var(--card-bg-color);
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: var(--shadow-sm);
 }
 
 .til-form .form-group {
@@ -309,20 +468,28 @@ footer {
 .til-form label {
   font-size: 0.85rem;
   font-weight: 700;
-  color: #555;
+  color: var(--primary-dark);
 }
 
 .til-form input,
 .til-form textarea {
-  padding: 10px 12px;
+  padding: 10px 14px;
   border: 1px solid var(--divider-color);
-  border-radius: 6px;
+  border-radius: 8px;
   font-family: inherit;
   font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.til-form input:focus,
+.til-form textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 114, 194, 0.15);
 }
 
 .til-form textarea {
-  min-height: 80px;
+  min-height: 100px;
   resize: vertical;
 }
 
@@ -333,11 +500,14 @@ footer {
 }
 
 .til-form button {
-  padding: 8px 20px;
+  padding: 9px 22px;
   border: none;
-  border-radius: 6px;
+  border-radius: 20px;
   cursor: pointer;
   font-size: 0.9rem;
+  font-family: inherit;
+  font-weight: 500;
+  transition: background-color 0.2s, transform 0.15s;
 }
 
 .til-form button[type="submit"] {
@@ -345,9 +515,18 @@ footer {
   color: #fff;
 }
 
+.til-form button[type="submit"]:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
 .til-form button[type="reset"] {
   background-color: #eee;
   color: #666;
+}
+
+.til-form button[type="reset"]:hover {
+  background-color: #e0e0e0;
 }
 
 /* 영상 삽입 */
@@ -357,32 +536,23 @@ footer {
   max-width: 480px;
   aspect-ratio: 16 / 9;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
-/* 변수 */
-:root {
-  --primary-color: #4a7c59;
-  --nav-bg-color: #fff;
-  --hero-bg-color: #f8faf8;
-  --card-bg-color: #fafafa;
-  --divider-color: #e8e8e8;
-  --font-default-color: #333;
-}
-
-
-#video-thumbnail1{
+#video-thumbnail1 {
   width: 100%;
   max-width: 240px;
   aspect-ratio: 16 / 9;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-#video-thumbnail2{
-    width: 100%;
-    max-width: 240px;
-    aspect-ratio: 9 / 16;
-    border: none;
-    border-radius: 4px;
+#video-thumbnail2 {
+  width: 100%;
+  max-width: 240px;
+  aspect-ratio: 9 / 16;
+  border: none;
+  border-radius: 8px;
+  overflow: hidden;
 }
