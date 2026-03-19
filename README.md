@@ -1,5 +1,8 @@
 # Today I Learn 페이지 만들기
 
+## 배포 링크
+https://committhekermit.github.io/web-today-i-learn/
+
 1. HTML 뼈대 잡기
 
 ### HTML
